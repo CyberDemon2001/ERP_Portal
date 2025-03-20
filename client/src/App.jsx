@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes } from "react-router-dom";
-import Admin from "./components/admin";
-import Register from "./components/register";
+import Admin from "./components/admin/admin";
+import Register from "./components/admin/register";
 
 function App() {
   return (

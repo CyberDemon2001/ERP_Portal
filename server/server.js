@@ -21,6 +21,8 @@ app.listen(PORT,()=>{
     console.log(`Server started on port ${PORT}`);
 });
 
+app.use('/api/register',Register);
+
 app.get('/',(req,res)=>{
     res.send('Hello World');
 });
