@@ -5,10 +5,11 @@ const Login = () => {
     const [uniqueId, setUniqueId] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
+    const [error, setError] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        setError(null);
         try {
             const response = await axios.post("http://localhost:8080/api/login", {
                 uniqueId,
@@ -27,6 +28,7 @@ const Login = () => {
     return (
         <div>
             <h2>Login</h2>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <form onSubmit={handleLogin}>
                 <div>
                     <label>Enrollment Number/Unique ID:</label>

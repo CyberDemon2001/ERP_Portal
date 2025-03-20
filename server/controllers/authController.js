@@ -39,7 +39,6 @@ const Login = async (req,res)=>{
       }
 
       res.status(200).json({message:"Login Successful!",user});
-      console.log(user);
       console.log("Login Successful!");
 
     }catch(error){
