@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from "react";
+import axios from "axios";
 
 const register = () => {
   const [formData, setFormData]=useState({
     name:"",
-    ID:"",
+    uniqueId:"",
     role:"student",
   });
 
@@ -15,16 +16,20 @@ const register = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault();
 
-    const userData={...formData};
+    const firstName = formData.name.split(" ")[0].toLowerCase();
+    const idDigits = formData.uniqueId.replace(/\D/g, "");
+    const password = `${firstName}${idDigits}`;
+
+    const userData={...formData, password};
     console.log(userData);
 
     try{
-        const response = await axios.post("http://localhost:5000/api/register", userData);
-        alert(response.data, "Registration Successfull");
+        const response = await axios.post("http://localhost:8080/api/register", userData);
+        alert(response.data.message);
     }
     catch(error){
-        console.error("Error in Registration", error);
-        alert(error.response?.data?.error || "Registration Failed");
+        console.error(error);
+        // alert(error.response?.data?.error || "Registration Failed");
     }
   }
 
@@ -35,8 +40,8 @@ const register = () => {
         <label>ID</label>
         <input 
         type="text"
-        name="ID"
-        value={formData.ID}
+        name="uniqueId"
+        value={formData.uniqueId}
         onChange={handleChange}
         required
         />

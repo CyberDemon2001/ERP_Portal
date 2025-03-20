@@ -2,8 +2,10 @@ require('dotenv').config();
 const express=require('express');
 const mongoose= require('mongoose');
 const cors = require('cors');
+const { Signup } = require('./controllers/authController');
 const app=express();
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 const MONGO_URI=process.env.MONGO_URI;
@@ -21,7 +23,7 @@ app.listen(PORT,()=>{
     console.log(`Server started on port ${PORT}`);
 });
 
-app.use('/api/register',Register);
+app.use('/api/register',Signup);
 
 app.get('/',(req,res)=>{
     res.send('Hello World');
