@@ -4,7 +4,7 @@ const Login = () => {
     const [enrollmentNumber, setEnrollmentNumber] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
         
         console.log('Enrollment Number:', enrollmentNumber);
@@ -14,7 +14,7 @@ const Login = () => {
     return (
         <div>
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLogin}>
                 <div>
                     <label>Enrollment Number:</label>
                     <input

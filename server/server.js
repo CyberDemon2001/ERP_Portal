@@ -21,6 +21,8 @@ app.listen(PORT,()=>{
     console.log(`Server started on port ${PORT}`);
 });
 
+app.use("/api/login",Login);
+
 app.use('/api/register',Register);
 
 app.get('/',(req,res)=>{
