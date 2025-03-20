@@ -14,7 +14,6 @@ const Login = () => {
                 uniqueId,
                 password
             });
-
             console.log(response.data);
             setRole(response.data.user.role);
             alert("Login Successful!");
