@@ -24,6 +24,7 @@ app.listen(PORT,()=>{
 });
 
 app.use('/api/register',Signup);
+app.use("/api/login",Login);
 
 app.get('/',(req,res)=>{
     res.send('Hello World');
