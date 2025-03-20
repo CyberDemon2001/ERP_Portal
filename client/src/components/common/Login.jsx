@@ -2,26 +2,26 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 const Login = () => {
-    const [enrollmentNumber, setEnrollmentNumber] = useState('');
+    const [uniqueId, setUniqueId] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        try{
-            const response = await axios.post("http://localhost:8080/api/login",{
-                enrollmentNumber,
+        try {
+            const response = await axios.post("http://localhost:8080/api/login", {
+                uniqueId,
                 password
             });
+            
 
             console.log(response.data);
-        }catch(error){
-            console.log(error);
+            setRole(response.data.user.role);
+            alert("Login Successful!");
+        } catch (error) {
+            setError(error.response?.data?.error || "Something went wrong!");
         }
-        
-        console.log('Enrollment Number:', enrollmentNumber);
-        console.log('Password:', password);
     };
 
     return (
@@ -29,24 +29,28 @@ const Login = () => {
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
                 <div>
-                    <label>Enrollment Number:</label>
+                    <label>Enrollment Number/Unique ID:</label>
                     <input
                         type="text"
-                        id="enrollmentNumber"
-                        value={enrollmentNumber}
-                        onChange={(e) => setEnrollmentNumber(e.target.value)}
+                        name="uniqueId"
+                        value={uniqueId}
+                        onChange={(e) => setUniqueId(e.target.value)}
+                        required
                     />
                 </div>
                 <div>
                     <label>Password:</label>
                     <input
                         type="password"
-                        id="password"
+                        name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                 </div>
                 <button type="submit">Login</button>
+
+                <h1>{role}</h1>
             </form>
         </div>
     );

@@ -2,7 +2,7 @@ require('dotenv').config();
 const express=require('express');
 const mongoose= require('mongoose');
 const cors = require('cors');
-const { Signup } = require('./controllers/authController');
+const { Signup,Login } = require('./controllers/authController');
 const app=express();
 app.use(cors());
 app.use(express.json());

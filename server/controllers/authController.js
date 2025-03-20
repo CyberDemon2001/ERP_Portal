@@ -23,4 +23,29 @@ const Signup = async (req, res) => {
   }
 }
 
-module.exports={Signup};
+const Login = async (req,res)=>{
+    try{
+      const {uniqueId, password} = req.body;
+      const user =await User.findOne({uniqueId});
+      console.log(user);
+      if(!user){
+        return res.status(404).json({error:"User not found!"});
+        console.log("User not found!");
+      }
+      const isPAsswordCorrect = await bcrypt.compare(password,user.password);
+      if(!isPAsswordCorrect){
+        return res.status(400).json({error:"Invalid Credentials!"});
+        console.log("Invalid Credentials!");
+      }
+
+      res.status(200).json({message:"Login Successful!",user});
+      console.log(user);
+      console.log("Login Successful!");
+
+    }catch(error){
+      res.status(500).json({error:"Error logging in!"});
+      console.log("Error logging in!");
+    }
+};
+
+module.exports={Signup,Login};
