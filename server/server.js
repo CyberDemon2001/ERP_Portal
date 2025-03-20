@@ -1,12 +1,27 @@
+require('dotenv').config();
 const express=require('express');
+const mongoose= require('mongoose');
+const cors = require('cors');
 const app=express();
-const port=3000;
+app.use(cors());
+
+const PORT = process.env.PORT || 8080;
+const MONGO_URI=process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+    console.error("MONGO_URI is not defined!");
+    process.exit(1);
+  }
+
+mongoose.connect(MONGO_URI, {})
+.then(()=>console.log("MongoDB Connected"))
+.catch((err)=>console.log(err));
+
+app.listen(PORT,()=>{
+    console.log(`Server started on port ${PORT}`);
+});
 
 app.get('/',(req,res)=>{
     res.send('Hello World');
-});
-
-app.listen(port,()=>{
-    console.log('Server started on port 3000');
 });
 

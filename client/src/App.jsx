@@ -1,15 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Admin from "./components/admin";
+import Register from "./components/register";
 
 function App() {
-
   return (
     <>
-     <h1>this is erp</h1>
+      <Routes>
+        <Route path="/" element={<h1>Homepage</h1>} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/register" element={<Register />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
