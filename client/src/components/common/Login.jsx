@@ -1,11 +1,24 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const Login = () => {
     const [enrollmentNumber, setEnrollmentNumber] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async () => {
         e.preventDefault();
+
+        try{
+            const response = await axios.post("http://localhost:8080/api/login",{
+                enrollmentNumber,
+                password
+            });
+
+            console.log(response.data);
+        }catch(error){
+            console.log(error);
+        }
         
         console.log('Enrollment Number:', enrollmentNumber);
         console.log('Password:', password);
