@@ -21,6 +21,43 @@ const userSchema = new Schema(
         type: String,
         required: true,
     },
+    course: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    admittedYear: {
+      type: String,
+      required: true,
+    },
+    fatherName: {
+      type: String,
+      required: true,
+    },
+    motherName: {
+      type: String,
+      required: true,
+    },
+    dateOfBirth: {
+      type: String,
+      required: true,
+    },
+    email:{
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    }
+
 }, { timestamps: true })
 
 const User = mongoose.model("User", userSchema);

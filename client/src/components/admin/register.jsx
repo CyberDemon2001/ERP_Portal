@@ -6,6 +6,15 @@ const Register = () => {
     name: "",
     uniqueId: "",
     role: "student",
+    Course: "",	
+    Category: "",
+    AdmittedYear: "",
+    FatherName: "",
+    MotherName: "",
+    DOB: "",
+    email: "",	
+    phone: "",
+    city: ""
   });
 
   const handleChange = (e) => {
@@ -50,6 +59,105 @@ const Register = () => {
               type="text"
               name="name"
               value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Course</label>
+            <input
+              type="text"
+              name="course"
+              value={formData.Course}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Category</label>
+            <input
+              type="text"
+              name="category"
+              value={formData.Category}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Admitted Year</label>
+            <input
+              type="text"
+              name="admittedyear"
+              value={formData.AdmittedYear}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Father's Name</label>
+            <input
+              type="text"
+              name="Father Name"
+              value={formData.FatherName}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Mother's Name</label>
+            <input
+              type="text"
+              name="Mother Name"
+              value={formData.MotherName}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Date of Birth</label>
+            <input
+              type="text"
+              name="DOB"
+              value={formData.DOB}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Email</label>
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">City</label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
               onChange={handleChange}
               required
               className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"

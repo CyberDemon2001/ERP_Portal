@@ -11,6 +11,15 @@ const Signup = async (req, res) => {
     const newUser = new User({
         uniqueId,
         name,
+        course,
+        category,
+        admittedYear,
+        fatherName,
+        motherName,
+        dateOfBirth,
+        email,
+        city,
+        phone,
         role,
         password: hashedPassword,
     })
