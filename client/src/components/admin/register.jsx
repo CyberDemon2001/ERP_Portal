@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Register = () => {
+  const [error, setError]=useState();
   const [formData, setFormData] = useState({
     name: "",
     uniqueId: "",
@@ -24,7 +25,8 @@ const Register = () => {
       const response = await axios.post("http://localhost:8080/api/register", userData);
       alert(response.data.message);
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data.error);
+      setError(error.response.data.error);
     }
   };
 
@@ -33,6 +35,7 @@ const Register = () => {
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Registration</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+        <h1 className="text-red-600">{error}</h1>
           <div>
             <label className="block text-gray-700 font-medium">ID</label>
             <input

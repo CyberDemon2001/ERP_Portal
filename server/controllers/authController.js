@@ -6,6 +6,16 @@ const Signup = async (req, res) => {
     console.log(req.body);
     const {name, uniqueId, role, password} = req.body;
 
+    if(!name || !uniqueId || !role || !password){
+      return res.status(400).json({error:"All Fields are required"});
+    }
+    
+    const existingUser = await User.findOne({uniqueId});
+    if(existingUser){
+      return res.status(400).json({error:"Already Exist in DB"});
+    }
+
+
     const hashedPassword = await bcrypt.hash(password,10)
 
     const newUser = new User({
