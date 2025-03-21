@@ -8,32 +8,15 @@ const Login = () => {
   const [role, setRole] = useState("");
   const [error, setError] = useState("");
 
-<<<<<<< HEAD
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:8080/api/login", {
-        uniqueId,
-        password,
-      });
-=======
-    const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:8080/api/login", {
                 uniqueId,
                 password
             });
-            console.log(response.data);
-            setRole(response.data.user.role);
-            alert("Login Successful!");
-        } catch (error) {
-            setError(error.response?.data?.error || "Something went wrong!");
-        }
-    };
->>>>>>> e68853daa64c2e906e262a3eb03b4de49258c87f
 
       console.log(response.data);
       const user = response.data.user;

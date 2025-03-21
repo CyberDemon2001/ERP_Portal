@@ -4,19 +4,22 @@ const User = require('../models/User')
 const Signup = async (req, res) => {
   try{
     console.log(req.body);
-    const {name, uniqueId, role, password} = req.body;
+    const {name, uniqueId,course,category,admittedYear,fatherName,motherName,dateOfBirth,email,city,phone, role, password} = req.body;
 
     if(!name || !uniqueId || !role || !password){
       return res.status(400).json({error:"All Fields are required"});
+      console.log("All Fields are required");
     }
     
     const existingUser = await User.findOne({uniqueId});
     if(existingUser){
       return res.status(400).json({error:"Already Exist in DB"});
+      console.log("Already Exist in DB");
     }
 
 
     const hashedPassword = await bcrypt.hash(password,10)
+    console.log("Hashed Password");
 
     const newUser = new User({
         uniqueId,
@@ -36,9 +39,11 @@ const Signup = async (req, res) => {
 
     await newUser.save();
     res.status(201).json({message:"Registered Successfully!"});
+    console.log("Registered Successfully!");
   }
   catch(error){
     res.status(500).json({error:"Error registering"})
+    console.log("Error registering");
   }
 }
 
