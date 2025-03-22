@@ -4,9 +4,8 @@ import Admin from "./components/admin/admin";
 import Register from "./components/admin/register";
 import Login from './components/common/Login';
 import Navbar from './components/common/Navbar';
-import Profile from './pages/student/Profile';
+import Profile from './pages/student/profile';
 import Attendance from './pages/student/Attendence';
-import Result from './pages/student/Result';
 import Library from './pages/student/Library';
 import Feedback from './pages/student/Feedback';
 import Leave from './pages/student/Leave';
@@ -15,6 +14,10 @@ import Events from './pages/student/Events';
 import SemesterRegistration from './pages/student/SemesterRegistration';
 import Assignment from './pages/student/Assignment';
 import ProblemSolving from './pages/student/ProblemSolving';
+import TimeTable from './pages/student/timetable';
+import Fee from './pages/student/fee';
+import DateSheet from './pages/student/datesheet';
+import Result from './pages/student/result';
 
 function App() {
   return (
@@ -35,9 +38,13 @@ function App() {
         <Route path="/student/:uniqueId/leave" element={<Leave />} />
         <Route path="/student/:uniqueId/placement" element={<Placement />} />
         <Route path="/student/:uniqueId/events" element={<Events />} />
+        <Route path="/student/:uniqueId/timetable" element={<TimeTable />} />
         <Route path="/student/:uniqueId/semester-registration" element={<SemesterRegistration />} />
         <Route path="/student/:uniqueId/assignment" element={<Assignment />} />
         <Route path="/student/:uniqueId/problem-solving" element={<ProblemSolving />} />
+        <Route path="/student/:uniqueId/datesheet" element={<DateSheet />} />
+        <Route path="/student/:uniqueId/fee-status" element={<Fee />} />
+        
       </Routes>
     </>
   );
