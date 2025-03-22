@@ -1,4 +1,5 @@
 import './App.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Admin from "./components/admin/admin";
 import Register from "./components/admin/register";
@@ -17,6 +18,8 @@ import Assignment from './pages/student/Assignment';
 import ProblemSolving from './pages/student/ProblemSolving';
 
 function App() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isProfileComplete = user?.isProfileComplete;
   return (
     <>
       <Navbar />
@@ -25,6 +28,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/register" element={<Register />} />
+        <Route path="/profile" element={isProfileComplete ? <Profile /> : <Navigate to="/student/:uniqueId/semester-registration" />} />
+
+        
 
         {/* Student Routes with uniqueId */}
         <Route path="/student/:uniqueId" element={<Profile />} />

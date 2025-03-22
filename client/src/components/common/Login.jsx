@@ -24,12 +24,15 @@ const Login = () => {
       alert("Login Successful!");
 
       localStorage.setItem('user', JSON.stringify(user));
-        if(user.role=="student"){
-            navigate(`/student/${user.uniqueId}`);
-        }
-        else{
-            navigate(`/staff/${user.uniqueId}`);
-        }
+if(user.role === "student") {
+    if (user.isProfileComplete) {
+        navigate(`/student/${user.uniqueId}`);
+    } else {
+        navigate(`/student/${user.uniqueId}/semester-registration`);
+    }
+} else {
+    navigate(`/staff/${user.uniqueId}`);
+}
     } catch (error) {
       setError(error.response?.data?.error || "Something went wrong!");
     }

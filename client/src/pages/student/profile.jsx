@@ -1,56 +1,102 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const CompleteProfile = () => {
+const Profile = () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    const uniqueId = user.uniqueId;
-    const role = user.role;
-    const name=user.name;
+    const uniqueId = user?.uniqueId;
 
-    const [formData, setFormData] = useState({
-        fatherName: "",
-        motherName: "",
-        dob: "",
-        contact: "",
-        address: "",
-        department: "",
-        email: ""
-    });
+    const [profileData, setProfileData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [editingField, setEditingField] = useState(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (!uniqueId) {
+                setError("User not found!");
+                setLoading(false);
+                return;
+            }
+            try {
+                const response = await axios.get(`http://localhost:8080/api/student/profile/${uniqueId}`);
+                setProfileData(response.data);
+            } catch (err) {
+                setError("Failed to fetch profile data");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, [uniqueId]);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setProfileData({ ...profileData, [editingField]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSave = async () => {
         try {
-            await axios.post("http://localhost:8080/api/profile/complete-profile", {
-                uniqueId,
-                role,
-                name,
-                profileData: formData
+            await axios.put(`http://localhost:8080/api/student/profile/${uniqueId}`, {
+                [editingField]: profileData[editingField],
             });
-            alert("Profile completed successfully!");
-        } catch (error) {
-            console.error("Error updating profile:", error);
-            alert("Failed to complete profile. Please try again.");
+            alert("Profile updated successfully!");
+            setEditingField(null);
+        } catch (err) {
+            alert("Failed to update profile!");
         }
     };
 
+    if (loading) return <p className="text-center">Loading...</p>;
+    if (error) return <p className="text-center text-red-500">{error}</p>;
+
     return (
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "400px", margin: "auto" }}>
-            <h2>Complete Your Profile</h2>
-            {/* <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} required /> */}
-            <input type="text" name="fatherName" placeholder="Father Name" value={formData.fatherName} onChange={handleChange} required />
-            <input type="text" name="motherName" placeholder="Mother Name" value={formData.motherName} onChange={handleChange} required />
-            <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
-            <input type="text" name="contact" placeholder="Contact" value={formData.contact} onChange={handleChange} required />
-            <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
-            <input type="text" name="department" placeholder="Department" value={formData.department} onChange={handleChange} required />
-            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-            <button type="submit">Submit</button>
-        </form>
+        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+            <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Profile Details</h2>
+            <div className="space-y-4">
+                {Object.entries(profileData).map(([key, value]) => (
+                    <div key={key} className="flex justify-between items-center border-b pb-2">
+                        <p><strong>{key.replace(/([A-Z])/g, " $1").toUpperCase()}:</strong></p>
+                        {editingField === key ? (
+                            <input
+                                type="text"
+                                name={key}
+                                value={value}
+                                onChange={handleChange}
+                                className="border px-2 py-1 rounded"
+                            />
+                        ) : (
+                            (key === "name" || key === "uniqueId") ? (
+                                <p>{value}</p> // Display as text for name and uniqueId
+                            ) : (
+                                <p>{value}</p>
+                            )
+                        )}
+                        <div className="flex space-x-2">
+                            {editingField === key ? (
+                                <>
+                                    <i
+                                        className="fa-solid fa-check text-green-500 cursor-pointer"
+                                        onClick={handleSave}
+                                    ></i>
+                                    <i
+                                        className="fa-solid fa-times text-red-500 cursor-pointer"
+                                        onClick={() => setEditingField(null)}
+                                    ></i>
+                                </>
+                            ) : (
+                                (key !== "name" && key !== "uniqueId") && ( // Allow editing for other fields only
+                                    <i
+                                        className="fa-solid fa-pencil text-blue-500 cursor-pointer"
+                                        onClick={() => setEditingField(key)}
+                                    ></i>
+                                )
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 
-export default CompleteProfile;
+export default Profile;

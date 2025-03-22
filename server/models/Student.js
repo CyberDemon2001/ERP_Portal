@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
-    userID: { type: String, unique: true, required: true }, // Fixed: userID (uppercase D)
+    uniqueId: { type: String, unique: true, required: true }, // Fixed: userID (uppercase D)
     name: { type: String, required: true,},
     fatherName: String,
     motherName: String,
