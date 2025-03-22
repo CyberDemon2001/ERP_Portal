@@ -1,80 +1,72 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-
-const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <nav className="bg-blue-600 p-4 shadow-lg">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
-                <h1 className="text-white text-xl font-bold">My App</h1>
-                <button 
-                    className="text-white md:hidden block" 
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    ☰
-                </button>
-                <ul className={`md:flex space-x-6 md:space-x-4 absolute md:static bg-blue-600 w-full md:w-auto left-0 top-16 md:top-auto ${isOpen ? 'block' : 'hidden'}`}>
-                    <li className="text-white py-2 px-4 hover:bg-blue-700 cursor-pointer">Home</li>
-                    <li className="text-white py-2 px-4 hover:bg-blue-700 cursor-pointer">About</li>
-                    <li className="text-white py-2 px-4 hover:bg-blue-700 cursor-pointer">Contact</li>
-                </ul>
-            </div>
-=======
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) return null;
+
+    const { uniqueId, role } = user;
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        navigate("/login");
+    };
+
+    const links = {
+        student: [
+            { path: "", label: "Profile" },
+            { path: "attendance", label: "Attendance" },
+            { path: "timetable", label: "Time Table" },
+            { path: "datesheet", label: "Date Sheet" },
+            { path: "result", label: "Result" },
+            { path: "fee-status", label: "Fee Status" },
+            { path: "library", label: "Library" },
+            { path: "feedback", label: "Feedback" },
+            { path: "leave", label: "Apply for Leave" },
+            { path: "placement", label: "Placement" },
+            { path: "events", label: "Events" },
+            { path: "semester-registration", label: "Semester Registration" },
+            { path: "assignment", label: "Assignments" },
+            { path: "problem-solving", label: "Problem Solving" },
+        ],
+        staff: [
+            { path: "", label: "Profile" },
+            { path: "attendance", label: "Manage Attendance" },
+            { path: "timetable", label: "Set Time Table" },
+            { path: "grades", label: "Manage Grades" },
+            { path: "leave-requests", label: "Leave Requests" },
+            { path: "students", label: "Student Management" },
+            { path: "library", label: "Library Requests" },
+            { path: "events", label: "Event Management" },
+        ]
+    };
+
     return (
-        <nav>
-            <ul className='flex gap-5 bg-blue-500 py-5 sticky px-5'>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/profile">Profile</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/attendance">Attendance</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/timetable">Time Table</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/datesheet">Date Sheet</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/result">Result</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/fee-status">Fee Status</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/library">Library</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/feedback">Feedback Form</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/logout">Logout</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/leave">Apply for Leave</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/placement">Placement</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/events">Events</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/semester-registration">Semester Registration</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/assignment">Assignment</Link>
-                </li>
-                <li className='hover:bg-orange-500 cursor-pointer'>
-                    <Link to="/problem-solving">Problem Solving</Link>
-                </li>
+        <nav className="bg-orange-500 text-white">
+            {/* Header Section */}
+            <div className="flex justify-between items-center py-4 px-6">
+                <h1 className="text-3xl font-bold">College Portal</h1>
+                <div className='flex gap-5'>
+                <div className="h-12 w-12 flex items-center justify-center border-white border-2 rounded-full">
+                    Logo
+                </div>
+                                {/* Logout Button */}
+                                <div className="text-center py-2 hover:bg-red-600 cursor-pointer">
+                    <button onClick={handleLogout} className="w-full">Logout</button>
+                </div>
+                </div>
+            </div>
+
+            {/* Navigation Links */}
+            <ul className="flex w-full bg-blue-500 text-white">
+                {links[role]?.map(({ path, label }) => (
+                    <li key={path} className="flex-grow text-center py-3 hover:bg-orange-600">
+                        <Link to={`/${role}/${uniqueId}/${path}`} className="block w-full">{label}</Link>
+                    </li>
+                ))}
             </ul>
->>>>>>> 1d6ab9fab577de290ca0dd8d7e28ae93fd50d7b6
         </nav>
     );
 };
