@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Result = () => {
+const Feedback = () => {
   return (
     <div>
-      result
+      feedback
     </div>
   )
 }
 
-export default Result
+export default Feedback

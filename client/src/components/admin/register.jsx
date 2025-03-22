@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     uniqueId: "",
     role: "student",
-    course: "",
-    category: "",
-    admittedYear: "",
-    fatherName: "",
-    motherName: "",
-    dateOfBirth: "",
-    email: "",
-    phone: "",
-    city: "",
+    // course: "",
+    // category: "",
+    // admittedYear: "",
+    // fatherName: "",
+    // motherName: "",
+    // dateOfBirth: "",
+    // email: "",
+    // phone: "",
+    // city: "",
   });
 
   const handleChange = (e) => {
@@ -33,6 +35,7 @@ const Register = () => {
     try {
       const response = await axios.post("http://localhost:8080/api/register", userData);
       alert(response.data.message);
+      navigate("/login");
     } catch (error) {
       console.error(error.response.data.error);
       setError(error.response.data.error);
@@ -72,123 +75,7 @@ const Register = () => {
               />
             </div>
 
-            {/* Course */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Course</label>
-              <input
-                type="text"
-                name="course"
-                value={formData.course}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Category */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Category</label>
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Admitted Year */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Admitted Year</label>
-              <input
-                type="text"
-                name="admittedYear"
-                value={formData.admittedYear}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Father's Name */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Father's Name</label>
-              <input
-                type="text"
-                name="fatherName"
-                value={formData.fatherName}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Mother's Name */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Mother's Name</label>
-              <input
-                type="text"
-                name="motherName"
-                value={formData.motherName}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Date of Birth */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Date of Birth</label>
-              <input
-                type="date"
-                name="dateOfBirth"
-                value={formData.dateOfBirth}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* City */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">City</label>
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
-            {/* Phone */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Phone</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              />
-            </div>
-
+          
             {/* Role */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Role</label>

@@ -24,12 +24,12 @@ const Login = () => {
       alert("Login Successful!");
 
       localStorage.setItem('user', JSON.stringify(user));
-
-      if (role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/profile");
-      }
+        if(user.role=="student"){
+            navigate(`/student/${user.uniqueId}`);
+        }
+        else{
+            navigate(`/staff/${user.uniqueId}`);
+        }
     } catch (error) {
       setError(error.response?.data?.error || "Something went wrong!");
     }

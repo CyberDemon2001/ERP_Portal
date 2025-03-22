@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Result = () => {
+const Assignment = () => {
   return (
     <div>
-      result
+      fas
     </div>
   )
 }
 
-export default Result
+export default Assignment

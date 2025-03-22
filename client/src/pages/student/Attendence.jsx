@@ -3,7 +3,6 @@ import Navbar from '../../components/common/Navbar';
 const Attendence = () => {
     return(
         <>
-        <Navbar />
         <h1>Attendance</h1>
         </>
     )

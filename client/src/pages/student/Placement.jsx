@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Result = () => {
+const Placement = () => {
   return (
     <div>
-      result
+      sfd
     </div>
   )
 }
 
-export default Result
+export default Placement

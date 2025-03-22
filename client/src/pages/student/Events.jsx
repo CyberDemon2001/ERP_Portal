@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Result = () => {
+const Events = () => {
   return (
     <div>
-      result
+      fsa
     </div>
   )
 }
 
-export default Result
+export default Events
