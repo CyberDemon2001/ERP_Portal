@@ -23,10 +23,10 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded-2xl shadow-xl w-96">
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
-                {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+            <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg w-full max-w-sm">
+                <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Login</h2>
+                {error && <p className="text-red-500 text-center mb-2">{error}</p>}
                 <form onSubmit={handleLogin} className="space-y-4">
                     <div>
                         <label className="block text-gray-600 text-sm font-semibold">Enrollment Number/Unique ID:</label>
