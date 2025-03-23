@@ -12,7 +12,7 @@ const Navbar = () => {
 
     const links = {
         student: [
-            { path: "", label: "Profile" },
+            { path: "profile", label: "Profile" },
             { path: "attendance", label: "Attendance" },
             { path: "timetable", label: "Time Table" },
             { path: "datesheet", label: "Date Sheet" },
@@ -23,7 +23,6 @@ const Navbar = () => {
             { path: "leave", label: "Apply for Leave" },
             { path: "placement", label: "Placement" },
             { path: "events", label: "Events" },
-            { path: "semester-registration", label: "Semester Registration" },
             { path: "assignment", label: "Assignments" },
             { path: "problem-solving", label: "Problem Solving" },
         ],

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const SemesterRegistration = () => {
+const ProfileCompletion = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
     const uniqueId = user?.uniqueId;
     const name = user?.name;
+    const role = user?.role; 
 
     const [formData, setFormData] = useState({
         fatherName: "",
@@ -25,16 +26,15 @@ const SemesterRegistration = () => {
                 const response = await axios.get(`http://localhost:8080/api/profile/check-profile/${uniqueId}`);
                 if (response.data.isProfileComplete) {
                     console.log(response.data.isProfileComplete);
-                    navigate("/profile");
-                    
                 }
             } catch (error) {
-                console.error("Error checking profile:", error);
+                console.error("Error checking profile:", error.response ? error.response.data : error.message);
             }
         };
-
-        if (uniqueId) checkProfile();
+    
+        checkProfile();
     }, [uniqueId, navigate]);
+    
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,18 +43,32 @@ const SemesterRegistration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:8080/api/profile/complete-profile", {
+            const response = await axios.post("http://localhost:8080/api/profile/complete-profile", {
                 uniqueId,
                 name,
+                role,
                 profileData: formData
             });
+    
+            if (response.data.isProfileComplete) {
+                const updatedUser = { ...user, isProfileComplete: true };
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+            }
+    
             alert("Profile saved successfully!");
-            navigate("/profile");
+            
+            // Navigate based on role
+            if (role === "staff") {
+                navigate(`/staff/${uniqueId}/profile`);
+            } else {
+                navigate(`/student/${uniqueId}/profile`);
+            }
         } catch (error) {
             console.error("Error updating profile:", error);
             alert("Failed to update profile. Please try again.");
         }
     };
+    
 
     return (
         <div className="flex items-center justify-center h-[80vh] bg-gray-100">
@@ -91,6 +105,6 @@ const SemesterRegistration = () => {
             </div>
         </div>
     );
-};
+}
 
-export default SemesterRegistration;
+export default ProfileCompletion

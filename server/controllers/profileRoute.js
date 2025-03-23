@@ -23,19 +23,32 @@ router.get("/check-profile/:uniqueId", async (req, res) => {
 
 router.post("/complete-profile", async (req, res) => {
     try {
-        const { uniqueId, name, profileData } = req.body;
+        const { uniqueId, name, role, profileData } = req.body;
 
         // Check if all required fields are filled
         const requiredFields = ["fatherName", "motherName", "dob", "contact", "address", "department", "email"];
         const isComplete = requiredFields.every(field => profileData[field]?.trim());
 
-        const existingProfile = await Student.findOne({ uniqueId });
+        let existingProfile;
 
-        if (existingProfile) {
-            await Student.findOneAndUpdate({ uniqueId }, profileData);
+        if (role === "student") {
+            existingProfile = await Student.findOne({ uniqueId });
+            if (existingProfile) {
+                await Student.findOneAndUpdate({ uniqueId }, profileData);
+            } else {
+                const newProfile = new Student({ uniqueId, name, ...profileData });
+                await newProfile.save();
+            }
+        } else if (role === "staff") {
+            existingProfile = await Staff.findOne({ uniqueId });
+            if (existingProfile) {
+                await Staff.findOneAndUpdate({ uniqueId }, profileData);
+            } else {
+                const newProfile = new Staff({ uniqueId, name, ...profileData });
+                await newProfile.save();
+            }
         } else {
-            const newProfile = new Student({ uniqueId, name, ...profileData });
-            await newProfile.save();
+            return res.status(400).json({ message: "Invalid role" });
         }
 
         await User.findOneAndUpdate({ uniqueId: uniqueId }, { isProfileComplete: isComplete });
@@ -78,11 +91,31 @@ router.put("/profile/:uniqueId", async (req, res) => {
         const { uniqueId } = req.params;
         const updatedData = req.body;
 
-        const updatedProfile = await Student.findOneAndUpdate(
-            { uniqueId },
-            updatedData,
-            { new: true }
-        );
+        // Find the user to determine their role
+        const user = await User.findOne({ uniqueId });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found!" });
+        }
+
+        let updatedProfile;
+
+        // Update profile based on role
+        if (user.role === "student") {
+            updatedProfile = await Student.findOneAndUpdate(
+                { uniqueId },
+                updatedData,
+                { new: true }
+            );
+        } else if (user.role === "staff") {
+            updatedProfile = await Staff.findOneAndUpdate(
+                { uniqueId },
+                updatedData,
+                { new: true }
+            );
+        } else {
+            return res.status(400).json({ message: "Invalid role!" });
+        }
 
         if (!updatedProfile) {
             return res.status(404).json({ message: "Profile not found!" });
@@ -94,6 +127,7 @@ router.put("/profile/:uniqueId", async (req, res) => {
         res.status(500).json({ message: "Error updating profile", error });
     }
 });
+
 
 
 
