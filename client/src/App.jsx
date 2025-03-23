@@ -17,7 +17,6 @@ import ProblemSolving from './pages/student/ProblemSolving';
 import TimeTable from './pages/student/timetable';
 import Fee from './pages/student/fee';
 import DateSheet from './pages/student/datesheet';
-import Result from './pages/student/Result';
 import ProfileCompletion from './components/common/Profile-Completion';
 
 // Private Route Component
@@ -58,7 +57,6 @@ function App() {
                 {/* Protected Student Routes */}
                 <Route path="/student/:uniqueId/profile" element={<PrivateRoute element={<Profile />} />} />
                 <Route path="/student/:uniqueId/attendance" element={<PrivateRoute element={<Attendance />} />} />
-                <Route path="/student/:uniqueId/result" element={<PrivateRoute element={<Result />} />} />
                 <Route path="/student/:uniqueId/library" element={<PrivateRoute element={<Library />} />} />
                 <Route path="/student/:uniqueId/feedback" element={<PrivateRoute element={<Feedback />} />} />
                 <Route path="/student/:uniqueId/leave" element={<PrivateRoute element={<Leave />} />} />
