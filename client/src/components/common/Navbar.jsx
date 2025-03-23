@@ -47,7 +47,7 @@ const Navbar = () => {
         <nav className="bg-orange-500 text-white">
             {/* Header Section */}
             <div className="flex justify-between items-center py-4 px-6">
-                <h1 className="text-3xl font-bold">College Portal</h1>
+                <h1 className="text-3xl font-bold">ERP Portal</h1>
                 <div className='flex gap-5'>
                 <div className="h-12 w-12 flex items-center justify-center border-white border-2 rounded-full">
                     Logo

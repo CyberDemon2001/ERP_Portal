@@ -17,7 +17,7 @@ router.post("/complete-profile", async (req, res) => {
             await Student.create({ userID: uniqueId, name, ...profileData });
         } else if (role === "staff") {
             await Staff.create({ userID: uniqueId,name, ...profileData });
-        } else {
+        }  else {
             return res.status(400).json({ error: "Invalid role" });
         }
 

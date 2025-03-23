@@ -36,6 +36,7 @@ const CompleteProfile = () => {
             alert("Failed to complete profile. Please try again.");
         }
     };
+    console.log(formData);
 
     return (
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "400px", margin: "auto" }}>

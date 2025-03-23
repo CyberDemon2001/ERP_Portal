@@ -3,7 +3,8 @@ import React from 'react'
 const Events = () => {
   return (
     <div>
-      fsa
+      <h1>Events</h1>
+      <p>No Events for Now</p>
     </div>
   )
 }
