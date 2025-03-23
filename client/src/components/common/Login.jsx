@@ -22,14 +22,21 @@ const Login = () => {
       const user = response.data.user;
       setRole(response.data.user.role);
       alert("Login Successful!");
-
+      console.log(user.uniqueId); 
       localStorage.setItem('user', JSON.stringify(user));
-        if(user.role=="student"){
-            navigate(`/student/${user.uniqueId}`);
+      if (user.role === "student") {
+        if (user.isProfileComplete) {
+          navigate(`/student/${user.uniqueId}/profile`);
+        } else {
+          navigate(`/student/${user.uniqueId}/profile-completion`);
         }
-        else{
-            navigate(`/staff/${user.uniqueId}`);
+      } else if (user.role === "staff") {
+        if (user.isProfileComplete) {
+          navigate(`/staff/${user.uniqueId}/profile`);
+        } else {
+          navigate(`/staff/${user.uniqueId}/profile-completion`);
         }
+      }
     } catch (error) {
       setError(error.response?.data?.error || "Something went wrong!");
     }

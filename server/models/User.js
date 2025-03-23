@@ -22,6 +22,7 @@ const userSchema = new Schema(
         required: true,
     },
     isProfileComplete: { type: Boolean, default: false }
+    
     // },
     // course: {
     //   type: String,

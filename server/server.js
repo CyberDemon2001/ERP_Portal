@@ -26,7 +26,8 @@ app.listen(PORT,()=>{
 
 app.use('/api/register',Signup);
 app.use("/api/login",Login);
-app.use("/api/profile",profileRoute);   
+app.use("/api/profile",profileRoute); 
+app.use("/api/student",profileRoute)  
 
 app.get('/',(req,res)=>{
     res.send('Hello World');
