@@ -18,7 +18,7 @@ const Profile = () => {
                 return;
             }
             try {
-                const response = await axios.get(`http://localhost:8080/api/student/profile/${uniqueId}`);
+                const response = await axios.get(`http://localhost:8080/api/profile/${uniqueId}`);
                 setProfileData(response.data);
             } catch (err) {
                 setError("Failed to fetch profile data");
@@ -36,7 +36,7 @@ const Profile = () => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`http://localhost:8080/api/student/profile/${uniqueId}`, {
+            await axios.put(`http://localhost:8080/api/profile/${uniqueId}`, {
                 [editingField]: profileData[editingField],
             });
             alert("Profile updated successfully!");

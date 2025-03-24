@@ -23,7 +23,7 @@ const ProfileCompletion = () => {
         const checkProfile = async () => {
             if (!uniqueId) return;
             try {
-                const response = await axios.get(`http://localhost:8080/api/profile/check-profile/${uniqueId}`);
+                const response = await axios.get(`http://localhost:8080/api/check-profile/${uniqueId}`);
                 if (response.data.isProfileComplete) {
                     console.log(response.data.isProfileComplete);
                 }
@@ -43,7 +43,7 @@ const ProfileCompletion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/profile/complete-profile", {
+            const response = await axios.post("http://localhost:8080/api/complete-profile", {
                 uniqueId,
                 name,
                 role,

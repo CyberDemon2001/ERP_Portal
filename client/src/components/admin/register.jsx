@@ -9,15 +9,6 @@ const Register = () => {
     name: "",
     uniqueId: "",
     role: "student",
-    // course: "",
-    // category: "",
-    // admittedYear: "",
-    // fatherName: "",
-    // motherName: "",
-    // dateOfBirth: "",
-    // email: "",
-    // phone: "",
-    // city: "",
   });
 
   const handleChange = (e) => {
@@ -43,13 +34,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-4xl"> {/* Increased max-width */}
+    <div className="flex flex-col justify-center items-center p-4 bg-gray-100">
+      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-4xl">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Registration</h1>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> {/* Grid layout for 2 columns on larger screens */}
-            {/* ID */}
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-1">ID</label>
               <input
@@ -61,8 +51,6 @@ const Register = () => {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
               />
             </div>
-
-            {/* Name */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Name</label>
               <input
@@ -74,9 +62,6 @@ const Register = () => {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
               />
             </div>
-
-          
-            {/* Role */}
             <div>
               <label className="block text-gray-700 font-medium mb-1">Role</label>
               <select
@@ -90,11 +75,9 @@ const Register = () => {
               </select>
             </div>
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition-all mt-6"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition-all"
           >
             Register
           </button>

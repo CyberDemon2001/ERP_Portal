@@ -1,8 +1,10 @@
+const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Student = require("../models/Student");
+const router = express.Router();
 
-const Signup = async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     console.log(req.body);
     const { name, uniqueId, role, password } = req.body;
@@ -34,9 +36,9 @@ const Signup = async (req, res) => {
     console.error("Error registering:", error);
     res.status(500).json({ error: "Error registering" });
   }
-};
+});
 
-const Login = async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { uniqueId, password } = req.body;
     const user = await User.findOne({ uniqueId });
@@ -55,6 +57,6 @@ const Login = async (req, res) => {
     console.error("Error logging in:", error);
     res.status(500).json({ error: "Error logging in!" });
   }
-};
+});
 
-module.exports = { Signup, Login };
+module.exports = router;

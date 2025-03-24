@@ -1,9 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const admin = () => {
+  const navigate = useNavigate();
   return (
-    <div>
-      <h1>Admin</h1>
+    <div className=''>
+      <button className='cursor-pointer' onClick={()=>navigate("/admin/register")}>Register</button>
     </div>
   )
 }

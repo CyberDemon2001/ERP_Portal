@@ -2,7 +2,7 @@ require('dotenv').config();
 const express=require('express');
 const mongoose= require('mongoose');
 const cors = require('cors');
-const { Signup,Login } = require('./controllers/authController');
+const authController = require('./controllers/authController');
 const profileRoute = require('./controllers/profileRoute');
 const app=express();
 app.use(cors());
@@ -24,10 +24,8 @@ app.listen(PORT,()=>{
     console.log(`Server started on port ${PORT}`);
 });
 
-app.use('/api/register',Signup);
-app.use("/api/login",Login);
-app.use("/api/profile",profileRoute); 
-app.use("/api/student",profileRoute)  
+app.use("/api",authController)
+app.use("/api",profileRoute);  
 
 app.get('/',(req,res)=>{
     res.send('Hello World');

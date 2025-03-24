@@ -10,7 +10,16 @@ const staffSchema = new mongoose.Schema({
     address: String,
     department: String,
     designation: String,
-    email: String
+    email: String,
+    subjects: {
+        type: [
+            {
+                name: { type: String, required: true },
+                code: { type: String, required: true }
+            }
+        ],
+        default: []
+    }
 });
 
 module.exports = mongoose.model("Staff", staffSchema);
