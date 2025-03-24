@@ -19,6 +19,7 @@ import Fee from './pages/student/fee';
 import DateSheet from './pages/student/datesheet';
 import ProfileCompletion from './components/common/Profile-Completion';
 import AddCourse from './components/admin/AddCourse';
+import ViewCourses from './components/admin/ViewCourses';
 
 // Private Route Component
 const PrivateRoute = ({ element }) => {
@@ -48,6 +49,8 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/register" element={<Register />} />
                 <Route path="/admin/add-course" element={<AddCourse />} />
+                <Route path="/admin/view-courses" element={<ViewCourses />} />
+                
 
                 {/* Profile Completion Routes */}
                 <Route path="/staff/:uniqueId/profile-completion" element={<ProfileCompletion />} />

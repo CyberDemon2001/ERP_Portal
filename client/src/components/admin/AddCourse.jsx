@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddCourse = () => {
+    const navigate = useNavigate();
   const [course, setCourse] = useState({
     name: "",
     code: "",
@@ -89,8 +91,15 @@ const AddCourse = () => {
   };
 
   return (
+    <>
     <div className="max-w-3xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
       <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Add Course</h2>
+      <button
+  onClick={() => navigate("/admin/view-courses")}
+  className="bg-purple-600 text-white font-medium px-4 py-2 rounded-lg mb-2 shadow-md transition-all hover:bg-purple-700 hover:scale-105"
+>
+  📚 View Courses
+</button>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input type="text" name="name" placeholder="Course Name" value={course.name} onChange={handleChange} required className="p-2 border rounded-md" />
@@ -130,7 +139,10 @@ const AddCourse = () => {
         ))}
         <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Submit</button>
       </form>
+      
     </div>
+    
+    </>
   );
 };
 
