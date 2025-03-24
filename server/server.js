@@ -4,6 +4,7 @@ const mongoose= require('mongoose');
 const cors = require('cors');
 const authController = require('./controllers/authController');
 const profileRoute = require('./controllers/profileRoute');
+const adminController = require('./controllers/adminController')
 const app=express();
 app.use(cors());
 app.use(express.json());
@@ -26,6 +27,7 @@ app.listen(PORT,()=>{
 
 app.use("/api",authController)
 app.use("/api",profileRoute);  
+app.use("/api",adminController); 
 
 app.get('/',(req,res)=>{
     res.send('Hello World');

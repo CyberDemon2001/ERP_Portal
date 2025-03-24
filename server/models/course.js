@@ -8,7 +8,7 @@ const courseSchema = new Schema(
     duration: { type: String, required: true, trim: true },
     semesters: [
       {
-        name: { type: String, required: true, trim: true },
+        semesterNumber: { type: Number, required: true, trim: true },
         subjects: [
           {
             name: { type: String, required: true, trim: true },
