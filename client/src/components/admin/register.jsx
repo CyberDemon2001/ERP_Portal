@@ -9,6 +9,8 @@ const Register = () => {
     name: "",
     uniqueId: "",
     role: "student",
+    course: "",
+    semester: "",
   });
 
   const handleChange = (e) => {
@@ -63,6 +65,24 @@ const Register = () => {
               />
             </div>
             <div>
+            <label className="block text-gray-700 font-medium mb-1">Course</label>
+              <input
+                type="text"
+                name="course"
+                value={formData.course}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+              ></input>
+              <label className="block text-gray-700 font-medium mb-1">Semester</label>
+              <input
+                type="Number"
+                name="semester"
+                value={formData.semester}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+              ></input>
               <label className="block text-gray-700 font-medium mb-1">Role</label>
               <select
                 name="role"
@@ -73,6 +93,7 @@ const Register = () => {
                 <option value="student">Student</option>
                 <option value="staff">Staff</option>
               </select>
+              
             </div>
           </div>
           <button

@@ -9,7 +9,11 @@ const studentSchema = new mongoose.Schema({
     contact: String,
     address: String,
     department: String,
-    email: String
+    email: String,
+    subjects: [{
+        name: { type: String, default: "none" },
+        code: { type: String, default: "00" },
+    }],
 });
 
 module.exports = mongoose.model("Student", studentSchema);
