@@ -39,7 +39,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-orange-500 text-white h-[20vh] border-2 border-black flex flex-col">
+        <nav className="bg-orange-500 text-white h-[20vh] flex flex-col">
     {/* Header Section */}
     <div className="flex justify-between items-center py-4 px-6 h-[70%]">
         <h1 className="text-2xl font-bold">Tatti College Portal</h1>

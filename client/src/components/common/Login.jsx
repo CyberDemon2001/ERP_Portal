@@ -43,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-[80vh] bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-96">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Login
@@ -88,6 +88,7 @@ const Login = () => {
             Role: {role}
           </h2>
         )}
+        
       </div>
     </div>
   );
