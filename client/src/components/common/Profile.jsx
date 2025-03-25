@@ -4,6 +4,7 @@ import axios from "axios";
 const Profile = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const uniqueId = user?.uniqueId;
+    const role = user?.role;
 
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -22,7 +23,9 @@ const Profile = () => {
                 const response = await axios.get(`http://localhost:8080/api/profile/${uniqueId}`);
                 const { _id, __v, ...filteredData } = response.data; // Remove _id and __v
                 setProfileData(filteredData);
-                fetchSubjects(filteredData.course, filteredData.semester);
+                if (role === "student") {
+                    fetchSubjects(filteredData.course, filteredData.semester);
+                }
             } catch (err) {
                 setError("Failed to fetch profile data");
             } finally {
@@ -31,7 +34,7 @@ const Profile = () => {
         };
 
         fetchProfile();
-    }, [uniqueId]);
+    }, [uniqueId, role]);
 
     const fetchSubjects = async (course, semester) => {
         try {
@@ -114,17 +117,21 @@ const Profile = () => {
                     )
                 ))}
             </div>
-            <h3 className="text-2xl font-semibold mt-6 mb-3 text-gray-800">Subjects</h3>
-            {subjects.length > 0 ? (
-                <ul className="list-disc pl-5 text-gray-700">
-                    {subjects.map((subject, index) => (
-                        <li key={index} className="py-1">
-                            <span className="font-semibold">{subject.name} ({subject.code})</span> - <span className="text-blue-600 uppercase">{subject.type}</span>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p className="text-gray-500">No subjects found</p>
+            {role === "student" && (
+                <>
+                    <h3 className="text-2xl font-semibold mt-6 mb-3 text-gray-800">Subjects</h3>
+                    {subjects.length > 0 ? (
+                        <ul className="list-disc pl-5 text-gray-700">
+                            {subjects.map((subject, index) => (
+                                <li key={index} className="py-1">
+                                    <span className="font-semibold">{subject.name} ({subject.code})</span> - <span className="text-blue-600 uppercase">{subject.type}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="text-gray-500">No subjects found</p>
+                    )}
+                </>
             )}
         </div>
     );

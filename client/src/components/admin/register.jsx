@@ -11,7 +11,7 @@ const Register = () => {
     role: "student",
     course: "",
     semester: "",
-    department:"",
+    department: "",
   });
 
   const handleChange = (e) => {
@@ -23,7 +23,13 @@ const Register = () => {
     const firstName = formData.name.split(" ")[0].toLowerCase();
     const idDigits = formData.uniqueId.replace(/\D/g, "");
     const password = `${firstName}${idDigits}`;
-    const userData = { ...formData, password };
+
+    let userData = { name: formData.name, uniqueId: formData.uniqueId, role: formData.role, password };
+
+    if (formData.role === "student") {
+      userData = { ...userData, course: formData.course, semester: formData.semester, department: formData.department };
+    }
+
     console.log(userData);
 
     try {
@@ -65,34 +71,8 @@ const Register = () => {
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
               />
             </div>
+
             <div>
-            <label className="block text-gray-700 font-medium mb-1">Course</label>
-              <input
-                type="text"
-                name="course"
-                value={formData.course}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              ></input>
-              <label className="block text-gray-700 font-medium mb-1">Semester</label>
-              <input
-                type="Number"
-                name="semester"
-                value={formData.semester}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              ></input>
-              <label className="block text-gray-700 font-medium mb-1">Department</label>
-              <input
-                type="text"
-                name="department"
-                value={formData.department}
-                onChange={handleChange}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-              ></input>
               <label className="block text-gray-700 font-medium mb-1">Role</label>
               <select
                 name="role"
@@ -103,8 +83,41 @@ const Register = () => {
                 <option value="student">Student</option>
                 <option value="staff">Staff</option>
               </select>
-              
             </div>
+
+            {formData.role === "student" && (
+              <>
+                <label className="block text-gray-700 font-medium mb-1">Course</label>
+                <input
+                  type="text"
+                  name="course"
+                  value={formData.course}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                />
+
+                <label className="block text-gray-700 font-medium mb-1">Semester</label>
+                <input
+                  type="number"
+                  name="semester"
+                  value={formData.semester}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                />
+
+                <label className="block text-gray-700 font-medium mb-1">Department</label>
+                <input
+                  type="text"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                />
+              </>
+            )}
           </div>
           <button
             type="submit"

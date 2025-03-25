@@ -9,8 +9,12 @@ router.post("/register", async (req, res) => {
     console.log(req.body);
     const { name, uniqueId, role, password, course, semester, department } = req.body;
 
-    if (!name || !uniqueId || !role || !password || !course || !semester || !department) {
-      return res.status(400).json({ error: "All Fields are required" });
+    if (!name || !uniqueId || !role) {
+      return res.status(400).json({ error: "Name, ID, and Role are required" });
+    }
+
+    if (role === "student" && (!course || !semester || !department)) {
+      return res.status(400).json({ error: "Course, Semester, and Department are required for students" });
     }
 
     const existingUser = await User.findOne({ uniqueId });
@@ -25,16 +29,13 @@ router.post("/register", async (req, res) => {
       name,
       role,
       password: hashedPassword,
-      course,
-      semester,
-      department,
+      ...(role === "student" && { course, semester, department }), // Only add these fields for students
     });
 
     await newUser.save();
     console.log("User Created");
 
     res.status(201).json({ message: "Registered Successfully!" });
-    console.log("Registered Successfully!");
   } catch (error) {
     console.error("Error registering:", error);
     res.status(500).json({ error: "Error registering" });
