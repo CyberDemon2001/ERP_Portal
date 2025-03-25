@@ -11,6 +11,7 @@ const Register = () => {
     role: "student",
     course: "",
     semester: "",
+    department:"",
   });
 
   const handleChange = (e) => {
@@ -79,6 +80,15 @@ const Register = () => {
                 type="Number"
                 name="semester"
                 value={formData.semester}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+              ></input>
+              <label className="block text-gray-700 font-medium mb-1">Department</label>
+              <input
+                type="text"
+                name="department"
+                value={formData.department}
                 onChange={handleChange}
                 required
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"

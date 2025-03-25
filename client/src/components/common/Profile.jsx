@@ -51,12 +51,12 @@ const Profile = () => {
     if (error) return <p className="text-center text-red-500">{error}</p>;
 
     // Define the display order
-    const fieldOrder = ["name", "course", "semester", "fatherName", "motherName", "dob", "contact", "address", "department", "email"];
+    const fieldOrder = ["name", "course", "semester", "department", "fatherName", "motherName", "dob", "contact", "address",  "email"];
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <div className="max-w-3xl mx-auto p-6 h-[80vh] bg-white shadow-lg rounded-lg">
             <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Profile Details</h2>
-            <div className="space-y-4">
+            <div className="space-y-2">
                 {fieldOrder.map((key) => (
                     profileData[key] !== undefined && (
                         <div key={key} className="flex justify-between items-center border-b pb-2">
@@ -68,7 +68,7 @@ const Profile = () => {
                                     value={profileData[key]}
                                     onChange={handleChange}
                                     className="border px-2 py-1 rounded"
-                                    disabled={key === "course" || key === "semester"} // Disable editing for course & semester
+                                    disabled={key === "course" || key === "semester" || key === "name" || key === "department"} // Disable editing for course & semester
                                 />
                             ) : (
                                 <p>{profileData[key]}</p>
@@ -86,7 +86,7 @@ const Profile = () => {
                                         ></i>
                                     </>
                                 ) : (
-                                    key !== "course" && key !== "semester" && (
+                                    key !== "course" && key !== "semester" && key !== "name" && key !== "department" && (
                                         <i
                                             className="fa-solid fa-pencil text-blue-500 cursor-pointer"
                                             onClick={() => setEditingField(key)}

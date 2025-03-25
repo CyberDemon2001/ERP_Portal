@@ -23,10 +23,10 @@ router.get("/check-profile/:uniqueId", async (req, res) => {
 
 router.post("/complete-profile", async (req, res) => {
     try {
-        const { uniqueId, name, role, profileData, } = req.body;
+        const { uniqueId, name, role, profileData } = req.body;
 
         // Check if all required fields are filled
-        const requiredFields = ["fatherName", "motherName", "dob", "contact", "address", "department", "email"];
+        const requiredFields = ["fatherName", "motherName", "dob", "contact", "address", "email"];
         const isComplete = requiredFields.every(field => profileData[field]?.trim());
 
         let existingProfile;
@@ -79,6 +79,7 @@ router.get("/profile/:uniqueId", async (req, res) => {
             ...profile.toObject(),
             course: user.course,     // Include course from User schema
             semester: user.semester, // Include semester from User schema
+            department: user.department, // Include department from User schema
         });
     } catch (error) {
         console.error(error);

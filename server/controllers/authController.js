@@ -7,9 +7,9 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   try {
     console.log(req.body);
-    const { name, uniqueId, role, password, course, semester } = req.body;
+    const { name, uniqueId, role, password, course, semester, department } = req.body;
 
-    if (!name || !uniqueId || !role || !password) {
+    if (!name || !uniqueId || !role || !password || !course || !semester || !department) {
       return res.status(400).json({ error: "All Fields are required" });
     }
 
@@ -27,6 +27,7 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       course,
       semester,
+      department,
     });
 
     await newUser.save();

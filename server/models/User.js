@@ -24,6 +24,7 @@ const userSchema = new Schema(
     isProfileComplete: { type: Boolean, default: false },
     course: { type: String },
     semester: { type: String },
+    department :{ type: String },
 
 }, { timestamps: true })
 

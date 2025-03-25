@@ -15,7 +15,6 @@ const ProfileCompletion = () => {
         dob: "",
         contact: "",
         address: "",
-        department: "",
         email: ""
     });
 
@@ -82,7 +81,6 @@ const ProfileCompletion = () => {
                             { label: "Date of Birth", name: "dob", type: "date" },
                             { label: "Contact", name: "contact", type: "text" },
                             { label: "Address", name: "address", type: "text" },
-                            { label: "Department", name: "department", type: "text" },
                             { label: "Email", name: "email", type: "email" }
                         ].map(({ label, name, type }) => (
                             <div key={name}>
