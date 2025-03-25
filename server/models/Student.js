@@ -10,6 +10,8 @@ const studentSchema = new mongoose.Schema({
     address: String,
     department: String,
     email: String,
+    course: { type: String, default: "Not specified" },  // Added course field
+    semester: { type: String, default: "Not specified" }, 
     subjects: [{
         name: { type: String, default: "none" },
         code: { type: String, default: "00" },

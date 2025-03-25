@@ -23,7 +23,7 @@ router.get("/check-profile/:uniqueId", async (req, res) => {
 
 router.post("/complete-profile", async (req, res) => {
     try {
-        const { uniqueId, name, role, profileData } = req.body;
+        const { uniqueId, name, role, profileData, } = req.body;
 
         // Check if all required fields are filled
         const requiredFields = ["fatherName", "motherName", "dob", "contact", "address", "department", "email"];
@@ -64,22 +64,22 @@ router.get("/profile/:uniqueId", async (req, res) => {
         const { uniqueId } = req.params;
         const user = await User.findOne({ uniqueId });
 
-        if (!user) {
-            return res.status(404).json({ message: "User not found!" });
-        }
+        if (!user) return res.status(404).json({ message: "User not found!" });
 
         let profile;
         if (user.role === "student") {
-            profile = await Student.findOne({ uniqueId: uniqueId });
+            profile = await Student.findOne({ uniqueId });
         } else if (user.role === "staff") {
-            profile = await Staff.findOne({ uniqueId: uniqueId });
+            profile = await Staff.findOne({ uniqueId });
         }
 
-        if (!profile) {
-            return res.status(404).json({ message: "Profile not found!" });
-        }
+        if (!profile) return res.status(404).json({ message: "Profile not found!" });
 
-        res.status(200).json(profile);
+        res.status(200).json({
+            ...profile.toObject(),
+            course: user.course,     // Include course from User schema
+            semester: user.semester, // Include semester from User schema
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching profile", error });
