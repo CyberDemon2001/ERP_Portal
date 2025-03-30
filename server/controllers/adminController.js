@@ -52,7 +52,40 @@ router.post("/add-course", async (req, res) => {
     catch(err){
       res.status(500).json({message: "Error fetching coordinators", error: err});
     }
-  })
+  });
+
+  router.post("/assign-subjects", async (req, res) => {
+    try {
+        const assignments = req.body; // Expecting an object with staffId as keys
+
+        if (!assignments || typeof assignments !== "object") {
+            return res.status(400).json({ message: "Invalid input format" });
+        }
+
+        for (const [staffId, subjectIds] of Object.entries(assignments)) {
+            const staff = await Staff.findById(staffId);
+            if (!staff) {
+                return res.status(404).json({ message: `Staff with ID ${staffId} not found` });
+            }
+
+            const subjects = await Subject.find({ _id: { $in: subjectIds } }); // Fetch subjects by IDs
+
+            subjects.forEach((subj) => {
+                if (!staff.subjects.some((existingSubj) => existingSubj.code === subj.code)) {
+                    staff.subjects.push({ name: subj.name, code: subj.code });
+                }
+            });
+
+            await staff.save();
+        }
+
+        res.json({ message: "Subjects assigned successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error assigning subjects", error });
+    }
+});
+
   
 
 module.exports = router;

@@ -23,6 +23,8 @@ import ViewCourses from './components/admin/ViewCourses';
 import Timetable from './components/admin/Timetable';
 import LeaveRequest from './pages/staff/leaveRequest';
 import MakeCoordinator from './components/admin/MakeCoordinator';
+import MarkAttendance from './pages/staff/markAttendance';
+import AssignSubjects from './components/admin/AssignSubjects';
 
 // Private Route Component
 const PrivateRoute = ({ element }) => {
@@ -57,6 +59,8 @@ function App() {
                 <Route path="/admin/view-courses" element={<ViewCourses />} />
                 <Route path="/admin/time-table" element={<Timetable />} />
                 <Route path="/admin/coordinator" element={<MakeCoordinator />} />
+                <Route path="/admin/assignsubjects" element={<AssignSubjects />} />
+
 
 
                 {/* Profile Completion Routes */}
@@ -65,6 +69,7 @@ function App() {
 
                 {/* Staff Routes */}
                 <Route path="/:role/:uniqueId/leave-requests" element={<LeaveRequest />} />
+                <Route path="/:role/:uniqueId/attendance" element={<MarkAttendance />} />
                
 
                 {/* Protected Student Routes */}

@@ -9,6 +9,7 @@ const admin = () => {
       <li className='cursor-pointer  hover:text-red-600' onClick={()=>navigate("/admin/add-course")}>Add Course</li>
       <li className='cursor-pointer  hover:text-red-600' onClick={()=>navigate("/admin/time-table")}>Time Table</li>
       <li className='cursor-pointer  hover:text-red-600' onClick={()=>navigate("/admin/coordinator")}>Assign Coordinator</li>
+      <li className='cursor-pointer  hover:text-red-600' onClick={()=>navigate("/admin/assignsubjects")}>Assign Subjects</li>
     </ul>
     
   )

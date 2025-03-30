@@ -29,13 +29,13 @@ app.listen(PORT,()=>{
     console.log(`Server started on port ${PORT}`);
 });
 
-app.use("/api",authController)
-app.use("/api",profileRoute);  
-app.use("/api",adminController); 
-app.use("/api",studentRoutes); 
-app.use("/api",timetableController);
-app.use("/api", staffController);
-app.use("/api", leaveController);
+app.use("/api",authController,profileRoute,adminController,studentRoutes,timetableController,staffController,leaveController);
+// app.use("/api",profileRoute);  
+// app.use("/api",adminController); 
+// app.use("/api",studentRoutes); 
+// app.use("/api",timetableController);
+// app.use("/api", staffController);
+// app.use("/api", leaveController);
 
 app.get('/',(req,res)=>{
     res.send('Hello World');
