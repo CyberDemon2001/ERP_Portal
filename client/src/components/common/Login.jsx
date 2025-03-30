@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 const Login = () => {
   const [uniqueId, setUniqueId] = useState("");
@@ -9,6 +10,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+ 
 
   const handleLogin = async (e) => {
         e.preventDefault();
@@ -17,26 +19,17 @@ const Login = () => {
                 uniqueId,
                 password
             });
-
-      console.log(response.data);
-      const user = response.data.user;
-      setRole(response.data.user.role);
+      const {token} = response.data;
+      const decodeUser = jwtDecode(token); 
+      localStorage.setItem('user', JSON.stringify(decodeUser));
+      setRole(decodeUser.role);
+      
       alert("Login Successful!");
-      console.log(user.uniqueId); 
-      localStorage.setItem('user', JSON.stringify(user));
-      if (user.role === "student") {
-        if (user.isProfileComplete) {
-          navigate(`/student/${user.uniqueId}/profile`);
+        if (decodeUser.isProfileComplete) {
+          navigate(`/${decodeUser.role}/${decodeUser.uniqueId}/profile`);
         } else {
-          navigate(`/student/${user.uniqueId}/profile-completion`);
+          navigate(`/${decodeUser.role}/${decodeUser.uniqueId}/profile-completion`);
         }
-      } else if (user.role === "staff") {
-        if (user.isProfileComplete) {
-          navigate(`/staff/${user.uniqueId}/profile`);
-        } else {
-          navigate(`/staff/${user.uniqueId}/profile-completion`);
-        }
-      }
     } catch (error) {
       setError(error.response?.data?.error || "Something went wrong!");
     }

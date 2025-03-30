@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -27,14 +28,14 @@ const Navbar = () => {
             { path: "problem-solving", label: "Problem Solving" },
         ],
         staff: [
-            { path: "", label: "Profile" },
+            { path: "profile", label: "Profile" },
             { path: "attendance", label: "Manage Attendance" },
-            { path: "timetable", label: "Set Time Table" },
             { path: "grades", label: "Manage Grades" },
             { path: "leave-requests", label: "Leave Requests" },
             { path: "students", label: "Student Management" },
             { path: "library", label: "Library Requests" },
             { path: "events", label: "Event Management" },
+            
         ]
     };
 

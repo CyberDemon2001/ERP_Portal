@@ -11,4 +11,18 @@ router.get("/staff", async (req, res) => {
     }
 });
 
+router.get("/staff/:uniqueId", async(req,res)=>{
+    const {uniqueId} = req.params;
+    console.log(req.params);
+    try{
+        const staff = await Staff.findOne({uniqueId});
+        if(!staff) return res.status(404).json({message: "Staff not found"});
+        res.json(staff);
+    }
+    catch(error){
+        res.status(500).json({message: "Error fetching staff", error});
+
+    }
+})
+
 module.exports = router;

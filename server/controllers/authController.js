@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Student = require("../models/Student");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
+
+const SECRET_KEY = "12345";
 
 router.post("/register", async (req, res) => {
   try {
@@ -56,7 +59,9 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Invalid Credentials!" });
     }
 
-    res.status(200).json({ message: "Login Successful!", user });
+    const token = jwt.sign({uniqueId: user.uniqueId, name:user.name, role: user.role, isProfileComplete: user.isProfileComplete, course: user.course, semester: user.semester}, SECRET_KEY, { expiresIn: "1h"})
+    res.status(200).json({ message: "Login Successful!", token,});
+
   } catch (error) {
     console.error("Error logging in:", error);
     res.status(500).json({ error: "Error logging in!" });

@@ -62,17 +62,25 @@ const Timetable = () => {
     const handleScheduleChange = (day, lectureIndex, key, value) => {
         setSchedule(prev => {
             const updatedSchedule = { ...prev };
-
+    
             if (!updatedSchedule[day]) {
                 updatedSchedule[day] = {};
             }
-
+    
             if (!updatedSchedule[day][lectureIndex]) {
                 updatedSchedule[day][lectureIndex] = {};
             }
-
-            updatedSchedule[day][lectureIndex][key] = value;
-
+    
+            if (key === "subject") {
+                const subjectObj = subjects.find(sub => sub._id === value);
+                updatedSchedule[day][lectureIndex][key] = subjectObj ? subjectObj.name : "";
+            } else if (key === "faculty") {
+                const facultyObj = faculty.find(f => f._id === value);
+                updatedSchedule[day][lectureIndex][key] = facultyObj ? facultyObj.name : "";
+            } else {
+                updatedSchedule[day][lectureIndex][key] = value;
+            }
+    
             if (key === "duration") {
                 if (value === "2" && lectureIndex < lectureTimings.length - 1) {
                     updatedSchedule[day][lectureIndex + 1] = { merged: true };
@@ -80,15 +88,17 @@ const Timetable = () => {
                     delete updatedSchedule[day][lectureIndex + 1];
                 }
             }
-
+    
             return updatedSchedule;
         });
     };
+    
 
     const handleSubmit = async () => {
         try {
+            const selectedCourseObj = courses.find(course => course._id === selectedCourse);
             const timetableData = {
-                course: selectedCourse,
+                course: selectedCourseObj ? selectedCourseObj.name.toUpperCase() : "",
                 semester: selectedSemester,
                 schedule
             };

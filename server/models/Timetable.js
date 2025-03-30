@@ -8,8 +8,8 @@ const TimetableSchema = new mongoose.Schema({
         of: {
             type: Map,
             of: {
-                subject: { type: mongoose.Schema.Types.ObjectId, ref: "Subject", required: true },
-                faculty: { type: mongoose.Schema.Types.ObjectId, ref: "Staff", required: true },
+                subject: { type: String, required: true },
+                faculty: { type: String, required: true },
                 room: { type: String }
             }
         }

@@ -19,6 +19,12 @@ const staffSchema = new mongoose.Schema({
             }
         ],
         default: []
+    },
+    coordinatorFor: {
+        type: String, 
+        unique: true, // Ensures only one coordinator exists per course
+        default: null, 
+        sparse: true  // Allows multiple staff members to have NULL in this field
     }
 });
 

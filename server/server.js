@@ -8,6 +8,7 @@ const adminController = require('./controllers/adminController')
 const studentRoutes = require('./controllers/studentRoutes');
 const timetableController = require('./controllers/timetableContoller');
 const staffController = require('./controllers/staffController');
+const leaveController  = require('./controllers/leaveController');
 const app=express();
 app.use(cors());
 app.use(express.json());
@@ -34,6 +35,7 @@ app.use("/api",adminController);
 app.use("/api",studentRoutes); 
 app.use("/api",timetableController);
 app.use("/api", staffController);
+app.use("/api", leaveController);
 
 app.get('/',(req,res)=>{
     res.send('Hello World');

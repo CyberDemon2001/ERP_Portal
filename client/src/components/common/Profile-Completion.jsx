@@ -55,13 +55,13 @@ const ProfileCompletion = () => {
             }
     
             alert("Profile saved successfully!");
-            
             // Navigate based on role
-            if (role === "staff") {
-                navigate(`/staff/${uniqueId}/profile`);
-            } else {
-                navigate(`/student/${uniqueId}/profile`);
-            }
+            // if (role === "staff") {
+            //     navigate(`/staff/${uniqueId}/profile`);
+            // } else {
+            //     navigate(`/student/${uniqueId}/profile`);
+            // }
+            navigate(`${role}/${uniqueId}/profile`);
         } catch (error) {
             console.error("Error updating profile:", error);
             alert("Failed to update profile. Please try again.");
