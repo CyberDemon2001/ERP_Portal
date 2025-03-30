@@ -3,139 +3,135 @@ import axios from 'axios';
 
 const AssignSubjects = () => {
     const [staff, setStaff] = useState([]);
-    const [subjects, setSubjects] = useState([]);
     const [courses, setCourses] = useState([]);
-    const [course, setCourse] = useState('');
-    const [semesters, setSemesters] = useState([]);
-    const [semester, setSemester] = useState('');
     const [selectedStaff, setSelectedStaff] = useState('');
-    const [assignments, setAssignments] = useState({});
+    const [selectedCourse, setSelectedCourse] = useState('');
+    const [selectedCourseName, setSelectedCourseName] = useState('');
+    const [semesters, setSemesters] = useState([]);
+    const [selectedSemester, setSelectedSemester] = useState('');
+    const [subjects, setSubjects] = useState([]);
+    const [selectedSubjects, setSelectedSubjects] = useState([]);
 
     useEffect(() => {
-        // Fetch courses
-        axios.get("http://localhost:8080/api/view-courses")
-            .then(response => setCourses(response.data))
-            .catch(error => console.error("Error fetching courses:", error));
+        const fetchData = async () => {
+            try {
+                const staffResponse = await axios.get("http://localhost:8080/api/staff");
+                const coursesResponse = await axios.get("http://localhost:8080/api/view-courses");
+                setCourses(coursesResponse.data);
+                setStaff(staffResponse.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
     }, []);
 
-    const handleCourseChange = (e) => {
-        const selectedCourse = e.target.value;
-        setCourse(selectedCourse);
+    const handleStaffChange = (event) => setSelectedStaff(event.target.value);
+
+    const handleCourseChange = (event) => {
+        const courseId = event.target.value;
+        const selectedCourseObj = courses.find(course => course._id === courseId);
+        setSelectedCourse(courseId);
+        setSelectedCourseName(selectedCourseObj ? selectedCourseObj.name : '');
         
-        // Find the selected course and update semesters dropdown
-        const courseData = courses.find(c => c.name === selectedCourse);
-        setSemesters(courseData ? courseData.semesters : []);
-        setSemester(''); // Reset semester selection
+        if (selectedCourseObj) {
+            setSemesters(selectedCourseObj.semesters || []);
+            setSelectedSemester('');
+            setSubjects([]);
+            setSelectedSubjects([]);
+        }
     };
 
-    const fetchData = (e) => {
-        e.preventDefault();
+    const handleSemesterChange = async (event) => {
+        const semesterNumber = Number(event.target.value);
+        setSelectedSemester(semesterNumber);
         
-        // Fetch staff members
-        axios.get("http://localhost:8080/api/staff")
-            .then(response => setStaff(response.data))
-            .catch(error => console.error("Error fetching staff:", error));
-
-        // Fetch subjects based on course and semester
-        axios.get(`http://localhost:8080/api/subjects/${course}/${semester}`)
-            .then(response => setSubjects(response.data))
-            .catch(error => console.error("Error fetching subjects:", error));
+        if (selectedCourse) {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/subjects/${selectedCourseName}/${semesterNumber}`);
+                setSubjects(response.data);
+                setSelectedSubjects([]);
+            } catch (error) {
+                console.error("Error fetching subjects:", error);
+                setSubjects([]);
+            }
+        }
     };
 
-    const handleAssignSubject = (subjectId) => {
-        if (!selectedStaff) {
-            alert("Please select a staff member first.");
+    const handleSubjectChange = (event) => {
+        const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+        setSelectedSubjects(selectedOptions);
+    };
+
+    const assignSubjectToStaff = async () => {
+        if (!selectedStaff || selectedSubjects.length === 0) {
+            alert("Please select a staff member and at least one subject.");
             return;
         }
-        setAssignments(prev => ({
-            ...prev,
-            [selectedStaff]: [...(prev[selectedStaff] || []), subjectId]
-        }));
-    };
+    
+        const selectedSubjectObjects = subjects.filter(sub => selectedSubjects.includes(sub._id));
 
-    const submitAssignments = () => {
-        axios.post("http://localhost:8080/api/assign-subjects", assignments)
-            .then(() => alert("Subjects assigned successfully!"))
-            .catch(error => console.error("Error assigning subjects:", error));
+        try {
+            await axios.post("http://localhost:8080/api/assign-subjects", {
+                staffId: selectedStaff,
+                subjects: selectedSubjectObjects.map(sub => ({ name: sub.name, code: sub.code }))
+            });
+            alert("Subjects assigned successfully!");
+        } catch (error) {
+            console.error("Error assigning subjects:", error);
+            alert("Failed to assign subjects.");
+        }
     };
-    console.log(assignments);
 
     return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Assign Subjects</h2>
+        <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Assign Subjects to Staff</h2>
             
-            <form onSubmit={fetchData} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mb-4">
+                <label className="block text-gray-600 mb-2">Select Staff:</label>
+                <select value={selectedStaff} onChange={handleStaffChange} className="w-full p-2 border rounded">
+                    <option value="">--Select Staff--</option>
+                    {staff.map(staffMember => (
+                        <option key={staffMember.uniqueId} value={staffMember.uniqueId}>{staffMember.name}</option>
+                    ))}
+                </select>
+            </div>
+            
+            <div className="mb-4">
+                <label className="block text-gray-600 mb-2">Select Course:</label>
+                <select value={selectedCourse} onChange={handleCourseChange} className="w-full p-2 border rounded">
+                    <option value="">--Select Course--</option>
+                    {courses.map(course => (
+                        <option key={course._id} value={course._id}>{course.name} ({course.code})</option>
+                    ))}
+                </select>
+            </div>
+            
+            {semesters.length > 0 && (
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Course:</label>
-                    <select 
-                        value={course} 
-                        onChange={handleCourseChange} 
-                        required
-                        className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    >
-                        <option value="">Select Course</option>
-                        {courses.map((c) => (
-                            <option key={c._id} value={c.name}>{c.name}</option>
+                    <label className="block text-gray-600 mb-2">Select Semester:</label>
+                    <select value={selectedSemester} onChange={handleSemesterChange} className="w-full p-2 border rounded">
+                        <option value="">--Select Semester--</option>
+                        {semesters.map(sem => (
+                            <option key={sem._id} value={sem.semesterNumber}>Semester {sem.semesterNumber}</option>
                         ))}
                     </select>
                 </div>
+            )}
+
+            {subjects.length > 0 && (
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Semester:</label>
-                    <select 
-                        value={semester} 
-                        onChange={(e) => setSemester(e.target.value)} 
-                        required
-                        className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        disabled={!course}
-                    >
-                        <option value="">Select Semester</option>
-                        {semesters.map((s) => (
-                            <option key={s.semesterNumber} value={s.semesterNumber}>{s.semesterNumber}</option>
+                    <label className="block text-gray-600 mb-2">Select Subjects:</label>
+                    <select multiple value={selectedSubjects} onChange={handleSubjectChange} className="w-full p-2 border rounded">
+                        {subjects.map(subject => (
+                            <option key={subject._id} value={subject._id}>{subject.name} ({subject.code})</option>
                         ))}
                     </select>
+                    <small className="text-gray-500">Hold Ctrl (Windows) / Command (Mac) to select multiple subjects.</small>
                 </div>
-                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Fetch Data
-                </button>
-            </form>
-            
-            <h3 className="text-xl font-semibold mt-6">Select Staff</h3>
-            <select 
-                value={selectedStaff} 
-                onChange={(e) => setSelectedStaff(e.target.value)}
-                className="shadow border rounded w-full py-2 px-3 text-gray-700 mt-2"
-            >
-                <option value="">Select Staff</option>
-                {staff.map(member => (
-                    <option key={member._id} value={member._id}>{member.name}</option>
-                ))}
-            </select>
+            )}
 
-            <h3 className="text-xl font-semibold mt-6">Assign Subjects</h3>
-            <select
-                onChange={(e) => handleAssignSubject(e.target.value)}
-                className="shadow border rounded w-full py-2 px-3 text-gray-700 mt-2"
-                disabled={!selectedStaff}
-            >
-                <option value="">Select Subject</option>
-                {subjects.map(subject => (
-                    <option key={subject._id} value={subject._id}>{subject.name}</option>
-                ))}
-            </select>
-
-            <h3 className="text-xl font-semibold mt-6">Assigned Subjects</h3>
-            <ul className="list-disc pl-5">
-                {assignments[selectedStaff]?.map(subjectId => (
-                    <li key={subjectId} className="text-gray-800">{subjects.find(sub => sub._id === subjectId)?.name}</li>
-                ))}
-            </ul>
-            
-            <button 
-                onClick={submitAssignments} 
-                className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-                Assign Subjects
-            </button>
+            <button onClick={assignSubjectToStaff} className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Assign Subjects</button>
         </div>
     );
 };

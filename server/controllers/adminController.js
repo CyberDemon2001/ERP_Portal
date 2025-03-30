@@ -56,36 +56,28 @@ router.post("/add-course", async (req, res) => {
 
   router.post("/assign-subjects", async (req, res) => {
     try {
-        const assignments = req.body; // Expecting an object with staffId as keys
+        const { staffId, subjects } = req.body;
 
-        if (!assignments || typeof assignments !== "object") {
-            return res.status(400).json({ message: "Invalid input format" });
+        if (!staffId || !Array.isArray(subjects) || subjects.length === 0) {
+            return res.status(400).json({ message: "Invalid input. Staff ID and subjects are required." });
         }
 
-        for (const [staffId, subjectIds] of Object.entries(assignments)) {
-            const staff = await Staff.findById(staffId);
-            if (!staff) {
-                return res.status(404).json({ message: `Staff with ID ${staffId} not found` });
-            }
-
-            const subjects = await Subject.find({ _id: { $in: subjectIds } }); // Fetch subjects by IDs
-
-            subjects.forEach((subj) => {
-                if (!staff.subjects.some((existingSubj) => existingSubj.code === subj.code)) {
-                    staff.subjects.push({ name: subj.name, code: subj.code });
-                }
-            });
-
-            await staff.save();
+        // Find the staff member
+        const staff = await Staff.findOne({ uniqueId: staffId });
+        if (!staff) {
+            return res.status(404).json({ message: "Staff member not found." });
         }
 
-        res.json({ message: "Subjects assigned successfully" });
+        // Add subjects to staff
+        staff.subjects = subjects;
+        await staff.save();
+
+        res.status(200).json({ message: "Subjects assigned successfully.", staff });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error assigning subjects", error });
+        console.error("Error assigning subjects:", error);
+        res.status(500).json({ message: "Internal server error." });
     }
 });
-
   
 
 module.exports = router;
