@@ -4,7 +4,7 @@ const schema = mongoose.Schema;
 const leaveSchema = new schema({
     studentID: { type: String, required: true },
     studentName: { type: String, required: true },
-    department: { type: String, required: true },
+    // department: { type: String, required: true },
     course: { type: String, required: true },
     semester: { type: Number, required: true },
     daysRequested: { type: Number, required: true },

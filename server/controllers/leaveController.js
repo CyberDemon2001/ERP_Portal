@@ -4,9 +4,9 @@ const Leave = require('../models/Leaves');
 const router = express.Router();
 
 router.post("/leave-request", async(req,res)=>{
-    const {studentId, studentName, department, course, semester, daysRequested, startDay, endDay, reason, description} = req.body;
+    const {studentId, studentName, course, semester, daysRequested, startDay, endDay, reason, description} = req.body;
     
-    if (!studentId || !studentName || !department || !course || !semester || !startDay || !endDay || !reason) {
+    if (!studentId || !studentName || !course || !semester || !startDay || !endDay || !reason) {
         return res.status(400).json({ error: "All required fields must be filled" });
     }
 
@@ -20,7 +20,7 @@ router.post("/leave-request", async(req,res)=>{
         const leave = new Leave({
             studentID: studentId,
             studentName: studentName,
-            department: department,
+            // department: department,
             course: course,
             semester: semester,
             daysRequested: daysRequested,

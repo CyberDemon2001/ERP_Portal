@@ -46,17 +46,19 @@ const LeaveApplicationForm = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  console.log(formData);
 
   try {
     const response = await axios.post("http://localhost:8080/api/leave-request", formData, 
     );
+    
 
     if (response.status === 200 || response.status === 201) {
       alert("Leave request submitted successfully!");
       setFormData({
         studentId: user.uniqueId,
         studentName: user.name,
-        department: user.department,
+        // department: user.department,
         course: user.course,
         semester: user.semester,
         reason: '',

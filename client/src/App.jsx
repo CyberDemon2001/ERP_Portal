@@ -60,6 +60,7 @@ function App() {
                 <Route path="/admin/time-table" element={<Timetable />} />
                 <Route path="/admin/coordinator" element={<MakeCoordinator />} />
                 <Route path="/admin/assignsubjects" element={<AssignSubjects />} />
+                
 
 
 
@@ -69,7 +70,7 @@ function App() {
 
                 {/* Staff Routes */}
                 <Route path="/:role/:uniqueId/leave-requests" element={<LeaveRequest />} />
-                <Route path="/:role/:uniqueId/attendance" element={<MarkAttendance />} />
+                <Route path="/:role/:uniqueId/mark-attendance" element={<MarkAttendance />} />
                
 
                 {/* Protected Student Routes */}

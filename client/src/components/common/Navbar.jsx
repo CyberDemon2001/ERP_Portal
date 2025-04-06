@@ -29,7 +29,7 @@ const Navbar = () => {
         ],
         staff: [
             { path: "profile", label: "Profile" },
-            { path: "attendance", label: "Manage Attendance" },
+            { path: "mark-attendance", label: "Manage Attendance" },
             { path: "grades", label: "Manage Grades" },
             { path: "leave-requests", label: "Leave Requests" },
             { path: "students", label: "Student Management" },

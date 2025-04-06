@@ -41,4 +41,20 @@ router.get("/subjects/:course/:semester", async (req, res) => {
     }
 });
 
+router.get("/students/subject/:code", async (req, res) => {
+    const subjectCode = req.params.code;
+
+    try {
+        const students = await Student.find(
+            { "subjects.code": subjectCode },
+            { name: 1, uniqueId: 1, _id: 0 }
+            );
+
+        res.json(students);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch students" });
+    }
+});
+
+
 module.exports = router;
